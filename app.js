@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -24,6 +24,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+//connect to Mongo
+mongoose.connect('mongodb://localhost/Dealios-app');
+
+// grab the user model
+var User = require('./models/user.js');
+
+// create a new user
+var newUser = User({
+  username: 'Peter Quill',
+  email_address: 'starlord55@gmail.com',
+  password: 'password',
+  admin: true
+});
+
+
+// save the user
+newUser.save(function(err) {
+  if (err) throw err;
+
+  console.log('User created!');
+});
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
