@@ -32,6 +32,8 @@ mongoose.connect('mongodb://localhost/Dealios-app');
 var User = require('./models/user.js');
 
 
+
+//successfully registers the user data POST
 app.post('/registerUser', function(req, res){
   new User({
     username    : req.body.username,
@@ -45,12 +47,23 @@ app.post('/registerUser', function(req, res){
   }
   });
 });
+//=====
+app.get('/view', function(req, res){
+  // get all the users
+  User.find({}, function(err, users) {
+    if (err) throw err;
 
+    // object of all the users
+    console.log(users);
+  });
+});
+//====================================
+User.find({}, function(err, users) {
+  if (err) throw err;
 
-
-
-
-
+  // object of all the users
+  console.log(users);
+});
 
 
 // catch 404 and forward to error handler

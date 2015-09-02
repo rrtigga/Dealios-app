@@ -43,7 +43,7 @@ $(document).ready(function() {
 			alert("Not a valid email! :P")
 		}
 		else{
-			alert("Awesome! Your registration will be reviewed shortly!")
+			alert("Awesome! You have registered!")
 		}
 
 	});
