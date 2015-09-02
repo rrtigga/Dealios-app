@@ -31,21 +31,22 @@ mongoose.connect('mongodb://localhost/Dealios-app');
 // grab the user model
 var User = require('./models/user.js');
 
-// create a new user
-var newUser = User({
-  username: 'Peter Quill',
-  email_address: 'starlord55@gmail.com',
-  password: 'password',
-  admin: true
+
+app.post('/registerUser', function(req, res){
+  new User({
+    username    : req.body.username,
+    email_address: req.body.email,
+    password   : req.body.password        
+  }).save(function(err, doc){
+    if(err) res.json(err);
+    else{  res.send('Successfully inserted!');
+    console.log("Successfully inserted");
+
+  }
+  });
 });
 
 
-// save the user
-newUser.save(function(err) {
-  if (err) throw err;
-
-  console.log('User created!');
-});
 
 
 
