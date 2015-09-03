@@ -61,18 +61,16 @@ app.get('/test', function(req, res){
 
 
 app.post('/view', function(req,res){
-  var typed_user = req.body.loginUser;
-  var typed_password = req.body.loginPassword;
-
-
-  User.find({username:req.body.loginUser}, function(err, founduser) {
+  
+  User.findOne({username:req.body.loginUser}, function(err, founduser) {
     if (err) 
      // no user found, create one
       throw err; 
     else
-      if (founduser != null)  // user is found, now check password: 
-        if (founduser.password == req.body.password)  // cool, user confirmed 
+        if (founduser.password == req.body.loginPassword)  // cool, user confirmed 
           res.send('Successfully logged in!');
+        else
+          res.send('You do not have an account');
   });
 
 });
