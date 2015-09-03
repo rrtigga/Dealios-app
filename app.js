@@ -44,11 +44,12 @@ app.post('/registerUser', function(req, res){
     else{  res.send('Successfully inserted!');
     console.log("Successfully inserted");
 
+
   }
   });
 });
 //=====
-app.get('/view', function(req, res){
+app.get('/test', function(req, res){
   // get all the users
   User.find({}, function(err, users) {
     if (err) throw err;
@@ -57,14 +58,26 @@ app.get('/view', function(req, res){
     console.log(users);
   });
 });
-//====================================
-User.find({}, function(err, users) {
-  if (err) throw err;
 
-  // object of all the users
-  console.log(users);
+
+app.post('/view', function(req,res){
+  var typed_user = req.body.loginUser;
+  var typed_password = req.body.loginPassword;
+
+
+  User.find({username:req.body.loginUser}, function(err, founduser) {
+    if (err) 
+     // no user found, create one
+      throw err; 
+    else
+      if (founduser != null)  // user is found, now check password: 
+        if (founduser.password == req.body.password)  // cool, user confirmed 
+          res.send('Successfully logged in!');
+  });
+
 });
 
+//====================================
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
